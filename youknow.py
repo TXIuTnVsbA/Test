@@ -102,7 +102,7 @@ if __name__ == '__main__':
         if tmp[0] == "thread":
             thread = int(tmp[1])
         if tmp[0] == "help":
-            print "spy=1 or 2\r\nurl=youknow\r\npage_start=1 or more\r\npage=1 or more\r\n|-page_start + page\r\nthread=2X\r\n"
+            print "spy=1-1(?page=) or 1-2(&page=) or 2-1\r\nurl=youknow\r\npage_start=1 or more\r\npage=1 or more\r\n|-page_start + page\r\nthread=2X\r\n"
             exit(0)
     if spy == "1-1":
     # 第一页起,遍历一页
