@@ -3,6 +3,7 @@ import requests,os
 from lxml import etree
 import threading
 import sys
+#import re
 requests.packages.urllib3.disable_warnings()
 url_base="https://nhentai.net"
 session = requests.Session()
@@ -28,11 +29,19 @@ def spy_2(url, thread):
     html = str(session.get(url).content)
     selector = etree.HTML(html)
     xp0=selector.xpath(".//*[@id='thumbnail-container']/div/a/@href")
-    for tmp in xp0:
-        r.append(spy_3(tmp))
+    url_1 = spy_3(xp0[0])
+    download(url_1)
+    for i in range(2,len(xp0)+1):
+        r.append(url_1.replace("1.",str(i)+"."))
+    #xp1=selector.xpath(".//*[@id='info']/div[1]")
+    #math="[0-9]+"
+    #num=re.findall(math,xp1[0])
+    #for tmp in xp0:
+        #r.append(spy_3(tmp))
         #r.append(url_base+tmp)
         #spy_3(url_base+tmp)
     if r:
+        #print r
         spy_Thread(r, thread, download)
 
 def spy_3(url):
@@ -42,7 +51,7 @@ def spy_3(url):
     html = str(session.get(url_tmp).content)
     selector = etree.HTML(html)
     xp0 = selector.xpath(".//*[@id='image-container']/a/img/@src")
-    print xp0
+    #print xp0
     if xp0:
         return xp0[0]
     return 0
@@ -102,7 +111,7 @@ if __name__ == '__main__':
         if tmp[0] == "thread":
             thread = int(tmp[1])
         if tmp[0] == "help":
-            print "spy==1 or 2\r\nurl=youknow\r\npage_start==1 or more\r\npage==1 or more\r\n|-page_start + page\r\nthread==2X\r\n"
+            print "spy==1 or 2\r\nurl==youknow\r\npage_start==1 or more\r\npage==1 or more\r\n|-page_start + page\r\nthread==2X\r\n"
             exit(0)
     if spy == "1":
     # 第一页起,遍历一页
